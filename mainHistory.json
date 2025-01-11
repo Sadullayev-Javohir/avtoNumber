@@ -1,0 +1,24 @@
+[
+    {
+        "AvtoNumberID": 3,
+        "AvtoNumber": "90A190AA",
+        "AvtoNumberCost": 2000000.0,
+        "AvtoNumberPutTime": "2025-01-03 21:52:27",
+        "AvtoNumberStatus": "Sotilgan",
+        "userID": 1,
+        "userName": "Yusuf",
+        "userAddress": "Buxoro",
+        "AvtoNumberSoldTime": "2025-01-03 21:55:02"
+    },
+    {
+        "AvtoNumberID": 1,
+        "AvtoNumber": "25R250RR",
+        "AvtoNumberCost": 1000000.0,
+        "AvtoNumberPutTime": "2025-01-03 21:52:27",
+        "AvtoNumberStatus": "Sotilgan",
+        "userID": 2,
+        "userName": "Ofsdfsgsfd",
+        "userAddress": "Sfhfjfgfg",
+        "AvtoNumberSoldTime": "2025-01-06 09:09:54"
+    }
+]

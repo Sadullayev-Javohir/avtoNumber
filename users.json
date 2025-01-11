@@ -1,0 +1,16 @@
+[
+    {
+        "ID": 1,
+        "userName": "Yusuf",
+        "userAddress": "Buxoro",
+        "soldNumber": "90A190AA",
+        "soldTime": "2025-01-03 21:55:02"
+    },
+    {
+        "ID": 2,
+        "userName": "Ofsdfsgsfd",
+        "userAddress": "Sfhfjfgfg",
+        "soldNumber": "25R250RR",
+        "soldTime": "2025-01-06 09:09:54"
+    }
+]
