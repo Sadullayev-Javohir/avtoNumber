@@ -228,7 +228,9 @@ def soldNumStatistic():
 
 
 def sellerRun():
+    print()
     print("\nSotuvchi Menyusi:")
+    print()
     print("1. Yangi raqam qo'shish")
     print("2. Raqamni tahrirlash")
     print("3. Raqamni o'chirish")

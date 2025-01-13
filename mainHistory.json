@@ -20,5 +20,27 @@
         "userName": "Ofsdfsgsfd",
         "userAddress": "Sfhfjfgfg",
         "AvtoNumberSoldTime": "2025-01-06 09:09:54"
+    },
+    {
+        "AvtoNumberID": 4,
+        "AvtoNumber": "50A123AA",
+        "AvtoNumberCost": 150000.0,
+        "AvtoNumberPutTime": "2025-01-14 00:57:58",
+        "AvtoNumberStatus": "Sotilgan",
+        "userID": 3,
+        "userName": "Rustam",
+        "userAddress": "Jizzax",
+        "AvtoNumberSoldTime": "2025-01-14 02:50:49"
+    },
+    {
+        "AvtoNumberID": 4,
+        "AvtoNumber": "80A123AA",
+        "AvtoNumberCost": 1242424.0,
+        "AvtoNumberPutTime": "2025-01-14 02:53:50",
+        "AvtoNumberStatus": "Sotilgan",
+        "userID": 4,
+        "userName": "Javohir",
+        "userAddress": "Jizzax",
+        "AvtoNumberSoldTime": "2025-01-14 03:37:54"
     }
 ]

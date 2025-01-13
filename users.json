@@ -12,5 +12,19 @@
         "userAddress": "Sfhfjfgfg",
         "soldNumber": "25R250RR",
         "soldTime": "2025-01-06 09:09:54"
+    },
+    {
+        "ID": 3,
+        "userName": "Rustam",
+        "userAddress": "Jizzax",
+        "soldNumber": "50A123AA",
+        "soldTime": "2025-01-14 02:50:49"
+    },
+    {
+        "ID": 4,
+        "userName": "Javohir",
+        "userAddress": "Jizzax",
+        "soldNumber": "80A123AA",
+        "soldTime": "2025-01-14 03:37:54"
     }
 ]

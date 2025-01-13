@@ -4,6 +4,8 @@ from user import *
 
 def main():
     print()
+    print("Avto Raqam")
+    print()
     print("1.Sotuvchi Menyusi")
     print("2.Foydalanuvchi Menyusi")
     print("3.Chiqish")
@@ -11,9 +13,31 @@ def main():
     prompt = input("Tanlang: ")
 
     if prompt == "1":
-        sellerRun()
+        def passwordCheck():
+            password = input("Parol kiriting: ")
+            if password == "12345":
+                sellerRun()
+                return
+            else:
+                print()
+                print("Xato qaytadan kiriting: ")
+                print()
+                passwordCheck()
+        passwordCheck()
+        
     elif prompt == "2":
-        user()
+        def passwordCheck():
+            password = input("Parol kiriting: ")
+
+            if password == "1234":
+                user()
+                return
+            else:
+                print()
+                print("Xato qaytadan kiriting: ")
+                print()
+                passwordCheck()
+        passwordCheck()
     elif prompt == "3":
         print("Kuningiz yaxshi o'tsin")
         return

@@ -1,11 +1,14 @@
 import json
 from datetime import datetime
 
+cash = 0
+
 # Hozirgi vaqtni olish
 purchaseTime = datetime.now()
 
 
 lastID = 0
+
 
 # keyingi ID ni olish
 def nextID():
@@ -13,22 +16,24 @@ def nextID():
     lastID += 1
     return lastID
 
+
 # oxirgi ID
 def LoadLastID():
-    global lastID  
+    global lastID
     try:
         with open("users.json", "r") as json_file:
             soldNumList = json.load(json_file)
             if soldNumList:
                 lastID = max(item["ID"] for item in soldNumList)
-    except(FileNotFoundError, ValueError):
+    except (FileNotFoundError, ValueError):
         lastID = 0
+
 
 # foydalanuvchi ma'lumotlarini saqlash
 def saveToJson():
     with open("users.json", "w") as json_file:
         json.dump(soldNumList, json_file, indent=4)
-    
+
 
 # Sotuvchining ma'lumotlarini yangilash
 def saveToSellerJson():
@@ -41,6 +46,7 @@ def saveToMainHistoryJson():
     with open("mainHistory.json", "w") as json_file:
         json.dump(mainHistoryList, json_file, indent=4)
 
+
 # barcha tarixlarni o'qish
 def mainHistoryJsonRead():
     global mainHistoryList
@@ -48,7 +54,7 @@ def mainHistoryJsonRead():
         with open("mainHistory.json", "r") as json_file:
             mainHistoryList = json.load(json_file)
     except json.JSONDecodeError:
-        
+
         mainHistoryList = []
 
 
@@ -60,6 +66,7 @@ def JsonRead():
             numberList = json.load(json_file)
     except json.JSONDecodeError:
         numberList = []
+
 
 # foydalanuvchi ma'lumotlarini o'qish
 def UsersJsonRead():
@@ -75,7 +82,11 @@ def UsersJsonRead():
 def usernameCheck():
     username = input("Ismingizni kiriting: ")
 
-    if username.isalpha() == True and username[0].isupper() == True and len(username) > 2:
+    if (
+        username.isalpha() == True
+        and username[0].isupper() == True
+        and len(username) > 2
+    ):
         return username
     else:
         return usernameCheck()
@@ -100,7 +111,6 @@ mainHistoryList = []
 soldNumDic = {}
 
 
-
 JsonRead()
 
 UsersJsonRead()
@@ -108,7 +118,6 @@ UsersJsonRead()
 mainHistoryJsonRead()
 
 LoadLastID()
-
 
 
 # 1. Mavjud raqamlarni ko'rish
@@ -120,8 +129,11 @@ def viewNum():
         return
     for numDic in numberList:
         print()
-        print(f"ID: {numDic["ID"]}, Avtoraqam: {numDic["number"]}, Narxi: {numDic["cost"]} so'm, Qo'yilgan vaqti: {numDic["putTime"]}, Xolati: {numDic["status"]}")
+        print(
+            f"ID: {numDic["ID"]}, Avtoraqam: {numDic["number"]}, Narxi: {numDic["cost"]} so'm, Qo'yilgan vaqti: {numDic["putTime"]}, Xolati: {numDic["status"]}"
+        )
         print()
+
 
 # 2. Raqam sotib olish
 def buyNum():
@@ -130,52 +142,60 @@ def buyNum():
         print("Hali ma'lumotlar yo'q")
         print()
         return
-    
-    viewNum()
-    inputNum = input("Sotib olmoqchi bo'lgan avtoraqamni kiriting: ")
 
-    while True:
+    viewNum()
+    
+    def save():
+        inputNum = input("Sotib olmoqchi bo'lgan avtoraqamni kiriting: ")
         for i in range(len(numberList)):
             if numberList[i]["number"] == inputNum:
-                userName = usernameCheck()
-                userAddress = addressnameCheck()
-                numberList[i]["status"] = "Sotilgan"
-                soldNumDic = {
-                    "ID": nextID(),
-                    "userName": userName,
-                    "userAddress": userAddress,
-                    "soldNumber": numberList[i]["number"],
-                    "soldTime": purchaseTime.strftime("%Y-%m-%d %H:%M:%S"),
-                }
-                mainHistoryDic = {
-                    "AvtoNumberID": numberList[i]["ID"],
-                    "AvtoNumber": numberList[i]["number"],
-                    "AvtoNumberCost": numberList[i]["cost"],
-                    "AvtoNumberPutTime": numberList[i]["putTime"],
-                    "AvtoNumberStatus": numberList[i]["status"],
-                    "userID": soldNumDic["ID"],
-                    "userName": soldNumDic["userName"],
-                    "userAddress": soldNumDic["userAddress"],
-                    "AvtoNumberSoldTime": soldNumDic["soldTime"]
+                if numberList[i]["cost"] <= cash:
+                    print(f"Qolgan pul: {cash - numberList[i]['cost']} so'm")
+                    
+                    userName = usernameCheck()
+                    userAddress = addressnameCheck()
+                    numberList[i]["status"] = "Sotilgan"
+                    
+                    soldNumDic = {
+                        "ID": nextID(),
+                        "userName": userName,
+                        "userAddress": userAddress,
+                        "soldNumber": numberList[i]["number"],
+                        "soldTime": purchaseTime.strftime("%Y-%m-%d %H:%M:%S"),
+                    }
+                    mainHistoryDic = {
+                        "AvtoNumberID": numberList[i]["ID"],
+                        "AvtoNumber": numberList[i]["number"],
+                        "AvtoNumberCost": numberList[i]["cost"],
+                        "AvtoNumberPutTime": numberList[i]["putTime"],
+                        "AvtoNumberStatus": numberList[i]["status"],
+                        "userID": soldNumDic["ID"],
+                        "userName": soldNumDic["userName"],
+                        "userAddress": soldNumDic["userAddress"],
+                        "AvtoNumberSoldTime": soldNumDic["soldTime"],
+                    }
+                    soldNumList.append(soldNumDic)
+                    mainHistoryList.append(mainHistoryDic)
+                    del numberList[i]
 
-                }
-                soldNumList.append(soldNumDic)
+                    saveToJson()
+                    saveToSellerJson()
+                    saveToMainHistoryJson()
 
-                mainHistoryList.append(mainHistoryDic)
-                del numberList[i]
-
-                saveToJson()
-                saveToSellerJson()
-                saveToMainHistoryJson()
-
-                print()
-                print("Muvaffaqqiyatli sotib oldingiz")
-                print()
-                return
+                    print("\nMuvaffaqqiyatli sotib oldingiz\n")
+                    return
+                else:
+                    cashMinus = numberList[i]["cost"] - cash
+                    print(f"Sizga {cashMinus} so'm kerak")
+                    print("Pul yetarli emas. Bosh menyuga qaytishingiz mumkin.")
+                    return
         else:
-            print("Xato...")
-            inputNum = input("Sotib olmoqchi bo'lgan avtoraqamni kiriting: ")
-            
+            print("Avtoraqam topilmadi. Qayta urinib ko'ring.")
+            return 
+
+    save()
+
+
 
 # 3. Xarid tarixini ko'rish
 def buyHistory():
@@ -186,16 +206,48 @@ def buyHistory():
     else:
         for soldNumDic in soldNumList:
             print()
-            print(f"ID: {soldNumDic["ID"]}, Foydalanuvchi ismi: {soldNumDic["userName"]}, Manzili: {soldNumDic["userAddress"]}, Sotilgan vaqti: {soldNumDic["soldTime"]}")
+            print(
+                f"ID: {soldNumDic["ID"]}, Foydalanuvchi ismi: {soldNumDic["userName"]}, Manzili: {soldNumDic["userAddress"]}, Sotilgan vaqti: {soldNumDic["soldTime"]}"
+            )
             print()
 
 
+def cashView():
+    print("1.Pul qo'shing")
+    print("2.Pul ko'rish")
+    chooseCash = input("Tanlang (1-2): ")
+    if chooseCash == "1":
+
+        def cashAdd():
+            cashInput = input("Pul kiriting: ")
+            if cashInput.isdigit():
+                cashInput = int(cashInput)
+                global cash
+                cash += cashInput
+                print()
+                print(f"Pul qo'shildi {cash} so'm")
+                return
+            else:
+                print("Qaytadan kiriting: ")
+                cashAdd()
+
+        cashAdd()
+    elif chooseCash == "2":
+        print(f"Sizda {cash} so'm pul bor")
+    else:
+        print("Qaytadan kiriting: ")
+        cashView()
+
+
 def user():
+    print()
     print("Foydalanuvchi Menyusi:")
+    print()
     print("1. Mavjud raqamlarni ko'rish")
     print("2. Raqam sotib olish")
     print("3. Xarid tarixini ko'rish")
-    print("4. Chiqish")
+    print("4. Mablag'ni ko'rish")
+    print("5. Chiqish")
 
     choose = input("Tanlang: ")
 
@@ -209,6 +261,9 @@ def user():
         buyHistory()
         user()
     elif choose == "4":
+        cashView()
+        user()
+    elif choose == "5":
         print()
         print("Kuningiz yaxshi o'tsin")
         print()
@@ -216,4 +271,3 @@ def user():
     else:
         print("1-4 gacha son kiriting: ")
         user()
-
